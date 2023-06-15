@@ -1,0 +1,62 @@
+OP_DEFINE-SECTION
+title
+Extended Coupling with Reflection Model
+Tully JCP (1990) 93: 1061
+end-title
+end-op_define-section
+
+PARAMETER-SECTION
+A1 = 0.0006
+A2 = -0.0006
+B1 = 0.10
+B2 = 0.20
+B3 = -0.10
+E1 = 0.02
+mass = 2000
+end-parameter-section
+
+HAMILTONIAN-SECTION
+-----------------------
+modes      |  el  | x 
+-----------------------
+-0.5/mass  |  1   | dq^2
+
+A1         | S1&1 | 1                   #V11
+A2         | S2&2 | 1                   #V22
+
+B1         | S1&2 | rstep1*expC
+B2         | S1&2 | step1
+B3         | S1&2 | step1*expC^-1
+
+------------------------
+end-hamiltonian-section
+
+LABELS-SECTION
+step1 = step[0]
+rstep1 = rstep[0]
+expC = exp^0.9
+flux1 = flux[14.0,1]
+flux2 = flux[-14.0,1]
+end-labels-section
+
+hamiltonian-section_flux11
+modes      |  el  | x 
+1.0        | S1&1 |  flux1
+end-hamiltonian-section
+
+hamiltonian-section_flux12
+modes      |  el  | x 
+1.0        | S1&1 |  flux2
+end-hamiltonian-section
+
+hamiltonian-section_flux21
+modes      |  el  | x 
+1.0        | S2&2 |  flux1
+end-hamiltonian-section
+
+hamiltonian-section_flux22
+modes      |  el  | x 
+1.0        | S2&2 |  flux2
+end-hamiltonian-section
+
+end-operator

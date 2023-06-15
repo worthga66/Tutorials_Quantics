@@ -1,0 +1,66 @@
+OP_DEFINE-SECTION
+title
+Tully's Simple curve-crossing model-1990
+Tully JCP (1990) 93: 1061
+end-title
+end-op_define-section
+
+PARAMETER-SECTION
+A1 = -0.01
+A2 = 0.01
+C = 0.005
+E1 = 0.02
+mass = 2000
+end-parameter-section
+
+HAMILTONIAN-SECTION
+-----------------------
+modes      |  el  | x 
+-----------------------
+-0.5/mass  |  1   | dq^2
+
+A2         | S1&1 | step1               #V11
+A1         | S1&1 | step1*expA^-1       #V11
+A1         | S1&1 | rstep1              #V11
+A2         | S1&1 | rstep1*expA         #V11
+
+A2         | S2&2 | rstep1              #V22
+A1         | S2&2 | rstep*expA          #V22
+A1         | S2&2 | step1               #V22
+A2         | S2&2 | step1*expA^-1       #V22
+
+C          | S1&2 | Gauss               #V12
+------------------------
+end-hamiltonian-section
+
+LABELS-SECTION
+step1 = step[0]
+rstep1 = rstep[0]
+expA = exp^1.6
+Gauss = gauss^1
+flux1 = flux[14.0,1]
+flux2 = flux[-14.0,-1]
+end-labels-section
+
+hamiltonian-section_flux11
+modes      |  el  | x
+1.0        | S1&1 |  flux1
+end-hamiltonian-section
+
+hamiltonian-section_flux12
+modes      |  el  | x
+1.0        | S1&1 |  flux2
+end-hamiltonian-section
+
+hamiltonian-section_flux21
+modes      |  el  | x
+1.0        | S2&2 |  flux1
+end-hamiltonian-section
+
+hamiltonian-section_flux22
+modes      |  el  | x
+1.0        | S2&2 |  flux2
+end-hamiltonian-section
+
+
+end-operator

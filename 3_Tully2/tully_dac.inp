@@ -1,0 +1,37 @@
+#################################################
+###	Curve-Crossing Model - 1990	#########
+#################################################
+
+RUN-SECTION
+name = tully_dac  propagate
+tfinal = 500.0  tout = 10.0  tpsi = 20.0
+psi auto steps gridpop
+exact   expect = flux11,flux12,flux21,flux22
+end-run-section
+
+OPERATOR-SECTION
+opname = tully_dac
+#alter-labels
+#CAPl_x = CAP[-12.0 0.0001 3 -1]
+#CAPr_x = CAP[12.0 0.0001 3]
+#end-alter-labels
+end-operator-section
+
+SPF-BASIS-SECTION
+multi-set
+  x = 1, 1
+end-spf-basis-section
+
+PRIMITIVE-BASIS-SECTION
+  x  fft  351  -20.0  20.0
+  el  el  2
+end-primitive-basis-section
+
+INIT_WF-SECTION
+build
+init_state = 1
+  x  Gauss  -8.0  4.5  0.5
+end-build
+end-init_wf-section
+
+end-input
